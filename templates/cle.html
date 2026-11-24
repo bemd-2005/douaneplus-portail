@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Votre clé d'essai DOUANEPLUS{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>{{ 'Votre clé d\'essai (déjà délivrée)' if deja else 'Votre clé d\'essai est prête' }}</h1>
+  <p class="muted">Valable {{ jours }} jours à partir de l'activation, à activer dans les 14 jours suivant son émission.</p>
+  <div class="key" id="cle">{{ cle }}</div>
+  <p style="margin-top:12px"><button type="button" onclick="copier()" id="bc">Copier la clé</button></p>
+</div>
+<div class="card">
+  <h2>Pour démarrer</h2>
+  <ol>
+    <li>Téléchargez DOUANEPLUS et installez-le sur votre ordinateur.</li>
+    <li>Ouvrez le logiciel : la page d'activation s'affiche.</li>
+    <li>Collez la clé <b>en entier</b> et validez.</li>
+  </ol>
+  {% if download %}<p><a class="btn" href="{{ download }}">Télécharger DOUANEPLUS</a></p>
+  {% else %}<p class="muted">Le lien de téléchargement vous sera communiqué directement.</p>{% endif %}
+  <p class="muted" style="margin-top:12px">Conservez cette clé : la page ne la réaffichera qu'avec le même email ou numéro.</p>
+</div>
+<script>
+function copier(){var t=document.getElementById('cle').innerText;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(done).catch(function(){
+    var r=document.createRange();r.selectNode(document.getElementById('cle'));var s=getSelection();s.removeAllRanges();s.addRange(r);
+    try{document.execCommand('copy');done()}catch(e){}});}
+function done(){document.getElementById('bc').textContent='Clé copiée ✓'}
+</script>
+{% endblock %}

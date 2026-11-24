@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Essayer DOUANEPLUS — {{ jours }} jours gratuits{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Essayez DOUANEPLUS gratuitement pendant {{ jours }} jours</h1>
+  <p class="muted">Le logiciel de cotation douanière pour la zone CEMAC : calculs fiscaux détaillés, procédures documentées et cotations professionnelles prêtes à remettre au client.</p>
+
+  <h2 style="margin-top:18px">Ce que vous pouvez tester</h2>
+  <ul>
+    <li><b>Cotations véhicules, marchandises et export</b> avec les droits et taxes détaillés ligne par ligne.</li>
+    <li><b>Bibliothèque de procédures</b> : pour une opération donnée, les étapes complètes et les documents requis.</li>
+    <li><b>Douane Score et alertes de risque</b>, comparaison de scénarios de cotation.</li>
+    <li><b>Personnalisation</b> : taux, règles et formules modifiables, champs personnalisés.</li>
+    <li><b>PDF de cotation</b> avec QR code vers votre WhatsApp, votre page Facebook ou votre site.</li>
+  </ul>
+  <p class="muted" style="font-size:.9rem">L'essai comprend {{ jours }} jours, 10 cotations et des PDF filigranés. Un seul essai par personne.</p>
+</div>
+
+<div class="card">
+  <h2>Obtenir ma clé d'essai</h2>
+  {% if erreur %}<div class="err">{{ erreur }}</div>{% endif %}
+  <form method="post" action="/essai" autocomplete="on">
+    <div class="hp" aria-hidden="true"><label>Site <input type="text" name="site" tabindex="-1" autocomplete="off"></label></div>
+    <label for="nom">Nom ou structure</label>
+    <input type="text" id="nom" name="nom" required maxlength="100" value="{{ form.get('nom','') }}">
+    <label for="contact">Email ou numéro WhatsApp</label>
+    <input type="text" id="contact" name="contact" required maxlength="150" inputmode="email" value="{{ form.get('contact','') }}">
+    <label class="check"><input type="checkbox" name="consent" value="1" required>
+      <span>J'accepte d'être recontacté au sujet de DOUANEPLUS à ces coordonnées.</span></label>
+    <p style="margin-top:18px"><button type="submit">Recevoir ma clé d'essai</button></p>
+  </form>
+  {% if whatsapp %}<p class="muted" style="margin-top:14px">Une question avant d'essayer ? <a href="{{ whatsapp }}">Écrivez-nous sur WhatsApp</a>.</p>{% endif %}
+</div>
+{% endblock %}
